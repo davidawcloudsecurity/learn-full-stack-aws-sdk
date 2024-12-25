@@ -5,6 +5,8 @@ How to create a login page that uses IAM cred and retrieve access and secret wit
 ```bash
 alias k=kubectl; alias tf="terraform"; alias tfa="terraform apply --auto-approve"; alias tfd="terraform destroy --auto-approve"; alias tfm="terraform init; terraform fmt; terraform validate; terraform plan"; sudo yum install -y yum-utils shadow-utils; sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo; sudo yum -y install terraform; terraform init
 ```
+### How it looks
+![image](https://github.com/user-attachments/assets/52eeb549-34e8-4415-9bcd-ece040314868)
 
 Let me explain what made it work and the flow:
 
