@@ -38,7 +38,7 @@ data "archive_file" "lambda_zip" {
       } = require('@aws-sdk/client-iam');
 
       exports.handler = async (event) => {
-          const iamClient = new IAMClient({ region: process.env.AWS_REGION });
+          const iamClient = new IAMClient({ region: var.aws_region });
           
           try {
               const listUsersResponse = await iamClient.send(new ListUsersCommand({}));
