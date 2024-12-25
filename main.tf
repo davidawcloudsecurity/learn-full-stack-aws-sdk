@@ -145,7 +145,6 @@ resource "aws_lambda_function" "cleanup_lambda" {
   environment {
     variables = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED = "1"
-      AWS_REGION = var.aws_region  # Add this to use region variable in Lambda
     }
   }
 }
