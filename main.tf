@@ -38,7 +38,7 @@ data "archive_file" "lambda_zip" {
       } = require('@aws-sdk/client-iam');
 
       exports.handler = async (event) => {
-          const iamClient = new IAMClient({ region: var.aws_region });
+          const iamClient = new IAMClient({ region: process.env.AWS_REGION });
           
           try {
               const listUsersResponse = await iamClient.send(new ListUsersCommand({}));
@@ -56,7 +56,7 @@ data "archive_file" "lambda_zip" {
                       const accessKeyId = accessKey.AccessKeyId;
                       
                       const expiryTag = listTagsResponse.Tags.find(
-                          tag => tag.Key === `ExpiryDate-${accessKeyId}`
+                          tag => tag.Key === 'ExpiryDate-' + accessKeyId
                       );
                       
                       if (expiryTag) {
@@ -69,7 +69,7 @@ data "archive_file" "lambda_zip" {
                                   AccessKeyId: accessKeyId
                               }));
                               
-                              console.log(`Deleted expired key ${accessKeyId} for user ${user.UserName}`);
+                              console.log('Deleted expired key ' + accessKeyId + ' for user ' + user.UserName);
                           }
                       }
                   }
