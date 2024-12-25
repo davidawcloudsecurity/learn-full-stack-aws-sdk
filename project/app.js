@@ -12,6 +12,27 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Move your index.html to public folder
+// Add this before your route handlers
+const { STSClient, GetCallerIdentityCommand } = require("@aws-sdk/client-sts");
+
+// Test AWS connectivity
+const stsClient = new STSClient({ region: 'us-east-1' });
+
+async function testAWSConnection() {
+    try {
+        const command = new GetCallerIdentityCommand({});
+        const response = await stsClient.send(command);
+        console.log("AWS Connection Successful. Account ID:", response.Account);
+        return true;
+    } catch (error) {
+        console.error("AWS Connection Failed:", error);
+        return false;
+    }
+}
+
+// Call this when your app starts
+testAWSConnection();
+
 
 app.post('/api/get-keys', async (req, res) => {
     const { username, password } = req.body;
