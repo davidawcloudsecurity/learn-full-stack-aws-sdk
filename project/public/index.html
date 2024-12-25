@@ -81,7 +81,6 @@
                 <label for="password">IAM Password:</label>
                 <input type="password" id="password" required>
             </div>
-            <!-- Add this new form group for expiry -->
             <div class="form-group">
                 <label for="expiry">Access Key Expiry (days):</label>
                 <input type="number" id="expiry" min="1" max="90" value="30" required>
@@ -98,21 +97,22 @@
                 <strong>Secret Key:</strong>
                 <span id="secretKey"></span>
             </div>
-            <!-- Add this new key div for showing expiry date -->
             <div class="key">
                 <strong>Expires On:</strong>
                 <span id="expiryDate"></span>
             </div>
         </div>
     </div>
+    
     <script>
         document.getElementById('iamForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const form = e.target;
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const expiryDays = document.getElementById('expiry').value; // Add this line
-
+            const expiryDays = document.getElementById('expiry').value;
+    
             try {
                 const response = await fetch('/api/get-keys', {
                     method: 'POST',
@@ -122,17 +122,25 @@
                     body: JSON.stringify({ 
                         username, 
                         password,
-                        expiryDays  // Add this line
+                        expiryDays 
                     })
                 });
-
+    
                 const data = await response.json();
-
+    
                 if (response.ok) {
                     document.getElementById('accessKey').textContent = data.accessKey;
                     document.getElementById('secretKey').textContent = data.secretKey;
-                    document.getElementById('expiryDate').textContent = data.expiryDate; // Add this line
+                    document.getElementById('expiryDate').textContent = data.expiryDate;
                     document.getElementById('keysContainer').style.display = 'block';
+                    
+                    // Clear the form
+                    form.reset();  // This clears all form fields
+                    
+                    // Or clear specific fields
+                    // document.getElementById('username').value = '';
+                    // document.getElementById('password').value = '';
+                    
                 } else {
                     alert(data.message || 'Error retrieving keys');
                 }
