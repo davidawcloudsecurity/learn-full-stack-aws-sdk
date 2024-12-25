@@ -61,5 +61,3 @@ The AWS credentials you configured must have this IAM policy:
   - Rate limiting
   - Proper error handling
   - Access key rotation logic
-
-Would you like me to explain any specific part in more detail? 
